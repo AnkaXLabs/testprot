@@ -8,11 +8,12 @@ import {
     TouchableOpacity
 } from "react-native"
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
-import { useNavigation,createStackNavigator,NavigationActions } from '@react-navigation/native';
+import { useNavigation, createStackNavigator, NavigationActions } from '@react-navigation/native';
 import SignUp from "./SignUp"
 import Trash from "./Trash";
 import Scan from "./Scan";
-const Home = ({navigation}) => {
+import { Linking } from 'react-native'
+const Home = ({ navigation }) => {
 
     const featuresData = [
         {
@@ -20,57 +21,35 @@ const Home = ({navigation}) => {
             icon: icons.reload,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
-            description: "Top Up"
+            description: "Refresh"
         },
         {
             id: 2,
-            icon: icons.send,
+            icon: icons.location,
             color: COLORS.yellow,
+
             backgroundColor: COLORS.lightyellow,
-            description: "Transfer"
+            description: "Map"
         },
         {
             id: 3,
             icon: icons.internet,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
-            description: "Internet"
+            description: "Our Web"
         },
         {
             id: 4,
-            icon: icons.wallet,
+            icon: icons.Dex,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
-            description: "Wallet"
+            description: "Dex"
         },
-        {
-            id: 5,
-            icon: icons.bill,
-            color: COLORS.yellow,
-            backgroundColor: COLORS.lightyellow,
-            description: "Bill"
-        },
-        {
-            id: 6,
-            icon: icons.game,
-            color: COLORS.primary,
-            backgroundColor: COLORS.lightGreen,
-            description: "Games"
-        },
-        {
-            id: 7,
-            icon: icons.phone,
-            color: COLORS.red,
-            backgroundColor: COLORS.lightRed,
-            description: "Mobile Prepaid"
-        },
-        {
-            id: 8,
-            icon: icons.more,
-            color: COLORS.purple,
-            backgroundColor: COLORS.lightpurple,
-            description: "More"
-        },
+
+
+
+
+
     ]
 
     const specialPromoData = [
@@ -104,38 +83,49 @@ const Home = ({navigation}) => {
     const [specialPromos, setSpecialPromos] = React.useState(specialPromoData)
 
     function renderHeader() {
-    
+
 
         return (
-            <View style={{ flexDirection: 'row', marginVertical: SIZES.padding * 2 }}>
-                <View style={{ flex: 1 }}>
+            <View style={{ flexDirection: 'row', 
+            marginVertical: SIZES.padding * 3,
+             justifyContent: 'center',
+              borderBottomWidth : 2, 
+              borderBottomColor : "black",
+               paddingBottom : 6,
+                borderRadius : 3,
+
+                }}>
+
+                <View style={{ flex: 1, flexDirection: "row" }}>
+                    <Image source={require('../assets/splash.png')} resizeMethod='auto' style={{ width: '20%', height: '90%' }}></Image>
                     <Text style={{ ...FONTS.h1 }}>Recycle to Earn</Text>
-                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>By ANKAxLABS</Text>
                 </View>
 
-                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <TouchableOpacity
+                <TouchableOpacity
+                    style={{
+                        height: 40,
+                        width: 40,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: 'transparent',
+                        borderRadius: 4,
+                        borderWidth: 1,
+                        border: 'black'
+                    }}
+                    onPress={() => {
+                        navigation.navigate('SignUp')
+                    }}
+                >
+                    <Image
+                        source={icons.wallet}
                         style={{
-                            height: 40,
-                            width: 40,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            backgroundColor: COLORS.lightGray
+                            width: 20,
+                            height: 20,
+                            tintColor: COLORS.secondary
                         }}
-                        onPress={() => {
-                            navigation.navigate('SignUp')
-                          }}
-                    >
-                        <Image
-                            source={icons.wallet}
-                            style={{
-                                width: 20,
-                                height: 20,
-                                tintColor: COLORS.secondary
-                            }}
-                        />
-                    </TouchableOpacity>
-                </View>
+                    />
+                </TouchableOpacity>
+
 
             </View>
         )
@@ -173,7 +163,14 @@ const Home = ({navigation}) => {
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 style={{ marginBottom: SIZES.padding * 2, width: 60, alignItems: 'center' }}
-                onPress={() => console.log(item.description)}
+                onPress={() => {
+                    if (`${item.description}` == 'Our Web') {
+                        Linking.openURL('https://www.ankaxlabs.com/')
+                    }
+                    else {
+                        navigation.navigate(`${item.description}`)
+                    }
+                }}
             >
                 <View
                     style={{
@@ -220,7 +217,6 @@ const Home = ({navigation}) => {
                 {renderHeader()}
                 {renderBanner()}
                 {renderFeatures()}
-                {renderPromoHeader()}
             </View>
         )
 
@@ -291,12 +287,19 @@ const Home = ({navigation}) => {
                 contentContainerStyle={{ paddingHorizontal: SIZES.padding * 3 }}
                 numColumns={2}
                 columnWrapperStyle={{ justifyContent: 'space-between' }}
-                data={specialPromos}
+
+                //deleted the promos from the main menue
+                //data={specialPromos}
                 keyExtractor={item => `${item.id}`}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
                 ListFooterComponent={
-                    <View style={{ marginBottom: 80 }}>
+                    <View style={{ marginTop: '15%' }}>
+                         {/* <Text style={{fontSize:20,...FONTS.h3}}>Follow your exp</Text>
+                         <View>
+
+                            <Text>this gonna be style</Text>
+                         </View> */}
                     </View>
                 }
             />
@@ -304,10 +307,13 @@ const Home = ({navigation}) => {
     }
 
     return (
+
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             {renderPromos()}
+           
         </SafeAreaView>
     )
+    
 }
 
 export default Home;

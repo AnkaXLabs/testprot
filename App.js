@@ -15,7 +15,8 @@ import { useFonts } from 'expo-font';
 import Tabs from "./navigation/tabs";
 import Trash from './screens/Trash';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import Dex from './screens/Dex';
+import Map from './screens/Map';
 const theme = {
     ...DefaultTheme,
     colors: {
@@ -37,7 +38,7 @@ const App = () => {
         return null;
     }
     return (
-        
+
         <NavigationContainer theme={theme}>
             <Stack.Navigator
                 screenOptions={{
@@ -45,7 +46,7 @@ const App = () => {
                 }}
                 initialRouteName={'Home'}
             >
-               
+
 
                 {Tabs}
                 <Stack.Screen name="Home" component={Tabs} />
@@ -60,9 +61,9 @@ const App = () => {
                     }></Stack.Screen>
 
 
-            {/*  down below is screen for wallet connect no need for log in at entry*/}
-              
-             <Stack.Screen name='SignUp'
+                {/*  down below is screen for wallet connect no need for log in at entry*/}
+
+                <Stack.Screen name='SignUp'
                     component={SignUp}
                     options={
                         {
@@ -72,9 +73,33 @@ const App = () => {
                     }></Stack.Screen>
 
                 {/* <Stack.Screen name="Scan" component={Scan} /> */}
+
+                <Stack.Screen name='Dex'
+                    component={Dex}
+                    options={
+                        {
+                            headerShown: false,
+
+                        }
+                    }></Stack.Screen>
+
+
+                <Stack.Screen name='Map'
+                    component={Map}
+                    options={
+                        {
+                            headerShown: false,
+
+                        }
+                    }></Stack.Screen>
+
+
+
+
+
             </Stack.Navigator>
         </NavigationContainer>
-        
+
     )
 }
 

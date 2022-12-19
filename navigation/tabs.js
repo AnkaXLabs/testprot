@@ -12,7 +12,7 @@ import Svg, {
 } from 'react-native-svg'
 import { isIphoneX } from 'react-native-iphone-x-helper'
 
-import { Home, Scan } from "../screens"
+import { Home, Scan,Shop } from "../screens"
 import { COLORS, icons } from "../constants"
 import Trash from "../screens/Trash";
 import SignUp from "../screens";
@@ -152,7 +152,7 @@ const Tabs = () => {
                     )
                 }}
             />
-            <Tab.Screen
+                  <Tab.Screen
                 name="Scan"
                 component={Scan}
                 options={{
@@ -174,6 +174,32 @@ const Tabs = () => {
                     )
                 }}
             />
+
+                <Tab.Screen
+                name="Shop"
+                component={Shop}
+                options={{
+                    tabBarIcon: ({ focused }) => (
+                        <Image
+                            source={icons.bill}
+                            resizeMode="contain"
+                            style={{
+                                width: 25,
+                                height: 25,
+                                tintColor: focused ? COLORS.white : COLORS.secondary
+                            }}
+                        />
+                    ),
+                    tabBarButton: (props) => (
+                        <TabBarCustomButton
+                            {...props}
+                        />
+                    )
+                }}
+            />
+
+
+      
             
 
 
